@@ -1,0 +1,206 @@
+package onlineshoping.java;
+
+import java.util.ArrayList;
+import java.util.List;
+
+// Product class
+class Product {
+    private int id;
+    private String name;
+    private String description;
+    private double price;
+    private int quantityAvailable;
+
+    public Product(int id, String name, String description, double price, int quantityAvailable) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantityAvailable = quantityAvailable;
+    }
+
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantityAvailable() {
+        return quantityAvailable;
+    }
+
+    public void setQuantityAvailable(int quantityAvailable) {
+        this.quantityAvailable = quantityAvailable;
+    }
+}
+
+// ShoppingCart class
+class ShoppingCart {
+    private List<Product> items;
+
+    public ShoppingCart() {
+        items = new ArrayList<>();
+    }
+
+    public void addItem(Product product) {
+        items.add(product);
+    }
+
+    public void removeItem(Product product) {
+        items.remove(product);
+    }
+
+    public List<Product> getItems() {
+        return items;
+    }
+}
+
+// Customer class
+class Customer {
+    private int id;
+    private String name;
+    private String emailAddress;
+    private String shippingAddress;
+
+    public Customer(int id, String name, String emailAddress, String shippingAddress) {
+        this.id = id;
+        this.name = name;
+        this.emailAddress = emailAddress;
+        this.shippingAddress = shippingAddress;
+    }
+
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+}
+
+// OnlineStore class
+class OnlineStore {
+    private List<Product> products;
+    private List<Customer> customers;
+
+    public OnlineStore() {
+        products = new ArrayList<>();
+        customers = new ArrayList<>();
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    // Method to search for products
+    public List<Product> searchProducts(String keyword) {
+        List<Product> searchResults = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                searchResults.add(product);
+            }
+        }
+        return searchResults;
+    }
+
+    // Method to place order
+    public void placeOrder(Customer customer, ShoppingCart cart) {
+        // Logic to place the order
+        System.out.println("Order placed for customer: " + customer.getName());
+        System.out.println("Items in the cart:");
+        for (Product product : cart.getItems()) {
+            System.out.println(product.getName() + " - $" + product.getPrice());
+        }
+        // Additional logic can be added for order processing, such as updating inventory, generating order ID, etc.
+    }
+}
+
+// Test class
+public class OnlineShoppingSystemTest {
+    public static void main(String[] args) {
+        // Create instances of products
+        Product laptop = new Product(1, "Laptop", "15-inch laptop", 999.99, 10);
+        Product smartphone = new Product(2, "Smartphone", "6.5-inch smartphone", 599.99, 20);
+        Product headphones = new Product(3, "Headphones", "Wireless headphones", 99.99, 50);
+
+        // Add products to the shopping cart
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItem(laptop);
+        cart.addItem(smartphone);
+
+        // Create a customer
+        Customer customer = new Customer(1, "John Doe", "john@example.com", "123 Street, City");
+
+        // Test search functionality
+        OnlineStore store = new OnlineStore();
+        store.addProduct(laptop);
+        store.addProduct(smartphone);
+        store.addProduct(headphones);
+
+        List<Product> searchResults = store.searchProducts("laptop");
+        System.out.println("Search results for 'laptop':");
+        for (Product product : searchResults) {
+            System.out.println(product.getName());
+        }
+
+        // Place order
+        store.placeOrder(customer, cart);
+    }
+}
+
